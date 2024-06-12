@@ -405,6 +405,7 @@ controller:
     - sonar:2.17.2
     - adoptopenjdk:1.5
     - git-client:4.7.0
+    - job-dsl:1.87
 
   # If set to false, Jenkins will download the minimum required version of all dependencies.
   # -- Download the minimum required version or latest version of all dependencies
@@ -515,7 +516,7 @@ controller:
     configScripts:
       welcome-message: |
         jenkins:
-          systemMessage: Bienvenido a nuestro CI\CD server. Jenkins esta configurado y dirigido 'as code'.
+          systemMessage: Bienvenido al servidor CI\CD. Jenkins esta configurado y manejado 'as code'.
       install-tools: |
         tool:
           jdk:
@@ -537,7 +538,43 @@ controller:
           git:
             installations:
               - name: git
-                home: /bin/git                          
+                home: /bin/git 
+          maven:
+            installations:
+            - name: "mvn-3.6.2"
+              properties:
+              - installSource:
+                  installers:
+                  - maven:
+                      id: "3.6.2" 
+      add-jobs: | 
+        jobs:                    
+           - script: >
+              pipelineJob('PetClinic Pipeline') {
+                definition {
+                  cps {
+                    script("""\
+                      pipeline {
+                        agent any
+                        tools {
+                            maven 'mvn-3.6.2'
+                        }
+                        stages {
+                          stage('Clonar código'){
+                            steps {
+                              git url: 'https://github.com/spring-projects/spring-petclinic.git'
+                            }
+                          }
+                          stage ('Build') {
+                            steps {
+                              sh 'mvn clean compile'
+                            }
+                          }
+                        }
+                      }""".stripIndent())
+                  }
+                }
+              }                     
 
     # Allows adding to the top-level security JCasC section. For legacy purposes, by default, the chart includes apiToken configurations
     # -- Jenkins Config as Code security-section
