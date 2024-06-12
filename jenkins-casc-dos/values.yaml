@@ -562,7 +562,7 @@ controller:
                         stages {
                           stage('Clonar código'){
                             steps {
-                              git url: 'https://github.com/spring-projects/spring-petclinic.git'
+                              git branch: 'main', url: 'https://github.com/spring-projects/spring-petclinic.git'
                             }
                           }
                           stage ('Build') {
