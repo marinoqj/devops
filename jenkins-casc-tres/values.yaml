@@ -546,34 +546,35 @@ controller:
               - installSource:
                   installers:
                   - maven:
-                      id: "3.6.3"                    
-          jobs:                    
-             - script: >
-                pipelineJob('MiniDemo Pipeline') {
-                  definition {
-                    cps {
-                      script("""\
-                        pipeline {
-                          agent any
-                          tools {
-                              maven 'mvn-3.6.2'
-                          }
-                          stages {
-                            stage('Clonar código'){
-                              steps {
-                                git branch: 'main', url: 'https://github.com/marinoqj/devops.git'
-                              }
-                            }
-                            stage ('Build') {
-                              steps {
-                                sh 'mvn clean compile'
-                              }
+                      id: "3.6.3" 
+      add-jobs: |                      
+        jobs:                    
+           - script: >
+              pipelineJob('MiniDemo Pipeline') {
+                definition {
+                  cps {
+                    script("""\
+                      pipeline {
+                        agent any
+                        tools {
+                            maven 'mvn-3.6.2'
+                        }
+                        stages {
+                          stage('Clonar código'){
+                            steps {
+                              git branch: 'main', url: 'https://github.com/marinoqj/devops.git'
                             }
                           }
-                        }""".stripIndent())
-                    }
+                          stage ('Build') {
+                            steps {
+                              sh 'mvn clean compile'
+                            }
+                          }
+                        }
+                      }""".stripIndent())
                   }
-                }                      
+                }
+              }                      
 
     # Allows adding to the top-level security JCasC section. For legacy purposes, by default, the chart includes apiToken configurations
     # -- Jenkins Config as Code security-section
