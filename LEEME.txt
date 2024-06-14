@@ -1,0 +1,4 @@
+
+
+- jenkins-casc-tres
+	Chart definido como NodePort con un job para descargar y compilar minidemo
