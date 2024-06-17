@@ -17,11 +17,11 @@ spec:
     name: jenkins-pv-claim
     namespace: default
   capacity:
-    storage: 10Gi
+    storage: 4Gi
   accessModes:
     - ReadWriteOnce
   local:
-    path: /var/jenkins-casc-home
+    path: /var/jenkins-home
   nodeAffinity:
     required:
       nodeSelectorTerms:
