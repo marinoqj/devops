@@ -550,7 +550,7 @@ controller:
       add-jobs: |                      
         jobs:                    
            - script: >
-              pipelineJob('MiniDemo Pipeline') {
+              pipelineJob('MiniDemo') {
                 definition {
                   cps {
                     script("""\
@@ -1256,7 +1256,7 @@ persistence:
   # Requires persistence.enabled: true
   # If defined, PVC must be created manually before volume will be bound
   # -- Provide the name of a PVC
-  existingClaim:
+  existingClaim: jenkins-pv-claim
 
   # jenkins data Persistent Volume Storage Class
   # If defined, storageClassName: <storageClass>
