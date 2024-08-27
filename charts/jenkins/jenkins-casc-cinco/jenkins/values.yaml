@@ -600,20 +600,28 @@ controller:
     # -- Jenkins Config as Code Security Realm-section
     # TODO - Probar que esto funciona cambiando el secret si hace falta
     securityRealm: |-
-      keycloak:
-        keycloakJson: |-
-          {
-            "realm": "jenkins-realm",
-            "auth-server-url": "http://192.168.2.124:30777/",
-            "ssl-required": "external",
-            "resource": "jenkins-client",
-            "credentials": {
-              "secret": "IVPZrlHCnTcNgAkolPlExmGZdMbZuFZi"
-            },
-            "confidential-port": 0
-          }
-        keycloakRespectAccessTokenTimeout: false
-        keycloakValidate: false
+      local:
+        allowsSignup: false
+        enableCaptcha: false
+        users:
+        - id: "${chart-admin-username}"
+          name: "Jenkins Admin"
+          password: "${chart-admin-password}"    
+    #securityRealm: |-
+    #  keycloak:
+    #    keycloakJson: |-
+    #      {
+    #        "realm": "jenkins-realm",
+    #        "auth-server-url": "http://192.168.2.124:30777/",
+    #        "ssl-required": "external",
+    #        "resource": "jenkins-client",
+    #        "credentials": {
+    #          "secret": "IVPZrlHCnTcNgAkolPlExmGZdMbZuFZi"
+    #        },
+    #        "confidential-port": 0
+    #      }
+    #    keycloakRespectAccessTokenTimeout: false
+    #    keycloakValidate: false
 
     # Ignored if authorizationStrategy is defined in controller.JCasC.configScripts
     # -- Jenkins Config as Code Authorization Strategy-section
