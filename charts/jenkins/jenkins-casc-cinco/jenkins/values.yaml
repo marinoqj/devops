@@ -172,7 +172,7 @@ controller:
   # If you set this prefix and use ingress controller, then you might want to set the ingress path below
   # I.e., "/jenkins"
   # -- Root URI Jenkins will be served on
-  jenkinsUriPrefix: /toolchain
+  jenkinsUriPrefix:
 
   # -- Enable pod security context (must be `true` if podSecurityContextOverride, runAsUser or fsGroup are set)
   usePodSecurityContext: true
