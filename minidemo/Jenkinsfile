@@ -1,0 +1,16 @@
+pipeline {
+  agent any
+  tools {
+    jdk 'jdk17'
+    maven 'mvn-3.6.3'
+  }
+  stages {  
+    stage('SonarQube analysis') {
+      steps {
+        withSonarQubeEnv(installationName: 'SonarQube') {
+            bat 'mvn clean compile package sonar:sonar -DskipTests -Dsonar.dependencyCheck.jsonReportPath=target/dependency-check-report.json -Dsonar.dependencyCheck.xmlReportPath=target/dependency-check-report.xml -Dsonar.dependencyCheck.htmlReportPath=target/dependency-check-report.html -Dsonar.token=squ_461429a068dbc5cd43925155a1f658fb8b5f729e'
+        }
+      }      
+    }   
+  }
+}
